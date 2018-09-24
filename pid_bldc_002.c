@@ -4,25 +4,16 @@
 #device ADC=10
 #use delay(internal=32MHz)
 
-//#pin_select U1TX=PIN_B6
-//#pin_select U1RX=PIN_B7
-//#use rs232(UART1,baud=115200)
 
-//#pin_select PWM3=PIN_C2
-///////////////////////////////////////////////
-//#pin_select T5CK=PIN_C0
-
-//#include <stdlib.h>
-//#include <input.c>
 
 #use timer(timer=2, tick=1ms, bits=16, ISR)
 
 //Set the sample frequency
-#define SAMPLE_FREQ  70 //50ms sample period
+#define SAMPLE_FREQ  250 //50ms sample period
 
 //Set the PID Kp, Ki and Kd values
-#define KP_VALUE 5
-#define KI_VALUE  15
+#define KP_VALUE 4
+#define KI_VALUE 7
 #define KD_VALUE 0
 
 #define  SCK pin_b4
@@ -39,8 +30,10 @@
    unsigned int16 PWMDuty;
   
    unsigned int16 DATA_A;
-  unsigned int16 value;
-  unsigned  INT16 VALUEA;
+   unsigned int16 value;
+   unsigned  INT16 VALUEA;
+   
+   //unsigned int8 loop_chk=0;
 
 unsigned int16 GetTickDifference(unsigned int16 Current, unsigned int16 Previous)
 {
@@ -87,13 +80,9 @@ void main()
    set_pwm3_duty(0); //0% duty
    setup_pwm3(PWM_ENABLED | PWM_OUTPUT | PWM_TIMER4);
    
-   //ADCReading = 100;
-  // pid_get_result(SetPoint, ADCReading, &PIDOutput);
-   
-  // a=PIDOutput.u;
-  // b=pidoutput.l;
-  // c=0;
-   //CurrentTick = PIDTick = get_ticks();
+
+
+
    
    while(TRUE)
    {  //SetPoint = 30; 
@@ -112,7 +101,7 @@ void main()
           output_toggle(pin_c7);
           
           set_adc_channel( 5 );
-          delay_us(10);
+          delay_us(5);
           ADCReading = read_adc();
         
 
@@ -182,7 +171,7 @@ for(i=0;i<16;++i)
 
    }
      output_LOW(LOAD);
-     delay_us(50);
+     delay_us(5);
      output_HIGH(LOAD);
      DELAY_US(1);OUTPUT_LOW(CS);DELAY_US(10);
 }
