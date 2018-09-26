@@ -9,17 +9,28 @@
 #use timer(timer=2, tick=1ms, bits=16, ISR)
 
 //Set the sample frequency
-#define SAMPLE_FREQ  250 //50ms sample period
+#define SAMPLE_FREQ  1000 //50ms sample period
 
 //Set the PID Kp, Ki and Kd values
-#define KP_VALUE 4
-#define KI_VALUE 7
+#define KP_VALUE 5
+#define KI_VALUE 10
 #define KD_VALUE 0
 
 #define  SCK pin_b4
 #define  SDI pin_b5
 #define  LOAD pin_b7
 #DEFINE  CS   PIN_b6
+
+int8 trisc;
+#locate trisc = 0x08e
+#bit trisc6   = trisc.6
+
+int8 portc;
+#locate portc=0x00e
+#bit sw_mode = portc.6
+
+
+
 //unsigned int16 a,b,c;
    pid_struct_t PIDOutput;
    
@@ -33,6 +44,7 @@
    unsigned int16 value;
    unsigned  INT16 VALUEA;
    
+     int1 flg_manual=0;
    //unsigned int8 loop_chk=0;
 
 unsigned int16 GetTickDifference(unsigned int16 Current, unsigned int16 Previous)
@@ -48,7 +60,8 @@ void CalculateKValues(int16 Kp,int16 Ki,int16 Kd,int16 &K1,int16 &K2,int16 &K3)
 }
 void writ_DAC_A(VOID);
 VOID CALL_DAC(VOID);
-
+void manual_mode(void);
+#include "manual_auto.c"
 void main()
 {
    //char c;
@@ -98,12 +111,13 @@ void main()
       
       if(GetTickDifference(CurrentTick, PIDTick) >= ((unsigned int16)TICKS_PER_SECOND / SAMPLE_FREQ))
       {
-          output_toggle(pin_c7);
+         // output_toggle(pin_c7);
+         if(sw_mode==0)manual_mode(); 
           
           set_adc_channel( 5 );
           delay_us(5);
           ADCReading = read_adc();
-        
+         output_toggle(pin_c7);
 
          //ADCReading = get_timer5();
          //set_timer5(0);

@@ -216,12 +216,13 @@ set_timer1(100);
 void main(void)
 { 
   TRIS_C13=1;
- setup_wdt (WDT_OFF);
+  setup_wdt (WDT_OFF);
   flg_t4=0;
   //trisb=0x000f;
   TRIS_E8=1;
   trisb3=trisb4=trisb5=1;
-  ptper=0x1f4;
+  //ptper=0x2f0;
+  ptper=0x3a0;
   SEVTCMP=ptper;
   ptmr=0x0000;
   //===============PMOD3(PWM3 MODE) PMDO2(PWM2MODE) AND PMOD1(PWM1MODE) FOR SELECT COMPLEMENTARY OR Independent mode
@@ -237,8 +238,8 @@ void main(void)
                // 10  Continuous Up/Down Counting mode.
                // 11   Continuous Up/Down mode with interrupts for double PWM
   //============PTCKPS0 AND PTCKPS1 BIT FOR PTMR PRESCALE
-  ptckps0=0;   // 00 (1:1 prescale)
-  ptckps1=1;   // 01 (1:4 prescale) 
+  ptckps0=1;   // 00 (1:1 prescale)
+  ptckps1=0;   // 01 (1:4 prescale) 
                // 10 (1:16 prescale)
                // 11 (1:64 prescale)  
   //============PENxh PENxl for enable pwmoutput===============
@@ -355,7 +356,7 @@ void getspeed(void)
     delay_us(10);
     duty = read_adc();
     if(duty<20)duty=20;
-    if(duty>300)duty=300;// maximum 30% of duty cycle
+    if(duty>700)duty=700;// maximum 30% of duty cycle
     
     pdc1= pdc2= pdc3=duty; 
   
