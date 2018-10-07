@@ -44,7 +44,7 @@ int16 TRISC;
 #BIT    TRIS_C13 =TRISC.13
 INT16 PORTC;
 #LOCATE PORTC = 0X2CE
-#BIT direct = PORTC.13
+//#BIT direct = PORTC.13
 
 INT16 TRISD;
 #LOCATE TRISD = 0X02D2
@@ -52,8 +52,8 @@ INT16 TRISD;
 
 INT16 PORTD;
 #LOCATE PORTD = 0X02D4
-#BIT reset_break = PORTD.0
-
+//#BIT reset_break = PORTD.0
+ #bit direct = PORTD.0
 int16 PTCON; 
 #locate PTCON = 0x1C0 
 #bit PTEN     = PTCON.15
@@ -393,7 +393,9 @@ void func_break(void)
    { output_toggle(pin_d1);delay_ms(300);
      if(direct==0)flg_dir=0;
      if(direct==1)flg_dir=1;
-     if(reset_break==0)fltaif=0;
+     while(!e8);
+     fltaif=0;
+     //if(reset_break==0)fltaif=0;
    }
    
    
