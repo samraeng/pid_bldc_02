@@ -94,7 +94,7 @@ void main()
    setup_pwm3(PWM_ENABLED | PWM_OUTPUT | PWM_TIMER4);
    
 
-
+ trisc6=1;
 
    
    while(TRUE)
@@ -141,18 +141,7 @@ void main()
          
          PIDTick = CurrentTick;
       }
-      
-      /*if(kbhit())
-      {
-         c = toupper(getc());
-         
-         if(c == 'S')
-         {
-            printf("\r\nNew Set Point (0-5V): ");
-            
-            SetPoint = (unsigned int16)(get_float() * 1000) / 5;
-         }
-      }*/
+
    }
 }  
 void writ_DAC_A(VOID)
