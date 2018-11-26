@@ -1,7 +1,7 @@
 //program drive BLDC fixed PWM
 //Hall effect PIN_B5-->Blue:PIN_b4-->Green:PIN_b3-->Yellow
 // FPWM = 1.25KHZ
-
+// on 26/11/2561 edit to master 500w
 #include <30F2010.h>
 #device adc=10
 //#Fuses  HS
