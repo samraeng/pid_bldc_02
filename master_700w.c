@@ -1,7 +1,7 @@
 //program drive BLDC fixed PWM
 //Hall effect PIN_B5-->Blue:PIN_b4-->Green:PIN_b3-->Yellow
 // FPWM = 1.25KHZ
-// on 26/11/2561 edit to master 500w
+// on 26/11/2561 edit to master 500w about pwm 3 khz
 #include <30F2010.h>
 #device adc=10
 //#Fuses  HS
@@ -222,7 +222,7 @@ void main(void)
   TRIS_E8=1;
   trisb3=trisb4=trisb5=1;
   //ptper=0x2f0;
-  ptper=0x3a0;
+  ptper=0x330;
   SEVTCMP=ptper;
   ptmr=0x0000;
   //===============PMOD3(PWM3 MODE) PMDO2(PWM2MODE) AND PMOD1(PWM1MODE) FOR SELECT COMPLEMENTARY OR Independent mode
@@ -356,7 +356,7 @@ void getspeed(void)
     delay_us(10);
     duty = read_adc();
     if(duty<20)duty=20;
-    if(duty>700)duty=700;// maximum 30% of duty cycle
+    if(duty>500)duty=500;// maximum 30% of 1632 duty cycle
     
     pdc1= pdc2= pdc3=duty; 
   
