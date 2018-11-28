@@ -12,7 +12,7 @@
 #define SAMPLE_FREQ  1000 //50ms sample period
 
 //Set the PID Kp, Ki and Kd values
-#define KP_VALUE 5
+#define KP_VALUE 6
 #define KI_VALUE 10
 #define KD_VALUE 0
 
