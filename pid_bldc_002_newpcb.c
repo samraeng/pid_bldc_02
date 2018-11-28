@@ -1,4 +1,4 @@
-//pid control dc motor
+//pid control bldc 5000w 28-11-2561
 #include <16F1618.h>
 #fuses NOWDT
 #device ADC=10
